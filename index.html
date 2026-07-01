@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KORA - 给在华外国人的 AI 本地向导</title>
+    <style>
+        :root {
+            --primary-color: #E63946;
+            --primary-hover: #D62828;
+            --bg-light: #F8F9FA;
+            --bg-card: #FFFFFF;
+            --text-main: #1D1D1F;
+            --text-muted: #666666;
+            --border-color: #E5E5E5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: var(--text-main);
+            background-color: #FFFFFF;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Hero Section */
+        header {
+            padding: 90px 0 60px 0;
+            text-align: center;
+            background: radial-gradient(circle at top, #FFF5F5 0%, #FFFFFF 70%);
+        }
+
+        .logo-badge {
+            background-color: #FFEAEB;
+            color: var(--primary-color);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+            color: var(--text-main);
+        }
+
+        h1 span {
+            color: var(--primary-color);
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-muted);
+            max-width: 640px;
+            margin: 0 auto 40px auto;
+            font-weight: 400;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 16px 36px;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(230, 57, 70, 0.3);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(230, 57, 70, 0.4);
+        }
+
+        .hero-note {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 16px;
+        }
+
+        /* Section Global */
+        section {
+            padding: 80px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        section.no-border {
+            border-top: none;
+        }
+
+        section.bg-gray {
+            background-color: var(--bg-light);
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .section-desc {
+            font-size: 16px;
+            color: var(--text-muted);
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 48px auto;
+        }
+
+        /* Intro Layout */
+        .intro-box {
+            background-color: var(--bg-light);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid var(--border-color);
+        }
+
+        .intro-p {
+            font-size: 18px;
+            margin-bottom: 24px;
+            color: #333;
+        }
+
+        .intro-highlight {
+            background-color: #FFF;
+            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            font-size: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        /* Pain points grid */
+        .grid-3x2 {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: separate;
+            border-spacing: 20px;
+        }
+
+        .grid-row {
+            display: table-row;
+        }
+
+        .card {
+            display: table-cell;
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+
+        .card-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .bridge-box {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        /* How it works */
+        .list-unstyled {
+            max-width: 800px;
+            margin: 0 auto;
+            list-style: none;
+        }
+
+        .list-unstyled li {
+            position: relative;
+            padding-left: 32px;
+            margin-bottom: 24px;
+            font-size: 16px;
+        }
+
+        .list-unstyled li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .boundary-alert {
+            max-width: 800px;
+            margin: 40px auto 0 auto;
+            background-color: #FFF9E6;
+            border-left: 4px solid #FFB703;
+            padding: 24px;
+            border-radius: 0 12px 12px 0;
+            font-size: 14px;
+        }
+
+        .boundary-title {
+            font-weight: bold;
+            color: #D48800;
+            margin-bottom: 6px;
+        }
+
+        /* Table Design */
+        .table-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 15px;
+        }
+
+        th, td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: var(--bg-light);
+            font-weight: 600;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .td-highlight {
+            font-weight: 600;
+            color: var(--primary-color);
+            background-color: #FFF5F5;
+        }
+
+        .table-summary {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* Features */
+        .features-grid {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: separate;
+            border-spacing: 16px;
+        }
+
+        .feat-card {
+            display: table-cell;
+            background: var(--bg-light);
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            vertical-align: top;
+        }
+
+        .feat-icon {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .feat-name {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .feat-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Steps Layout */
+        .steps-container {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .step-row {
+            display: table;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .step-num {
+            display: table-cell;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            vertical-align: middle;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .step-content {
+            display: table-cell;
+            padding-left: 20px;
+            vertical-align: middle;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .demo-box {
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 32px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+
+        .demo-tag {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .chat-bubble {
+            background: var(--bg-light);
+            padding: 12px 16px;
+            border-radius: 4px 16px 16px 16px;
+            margin-bottom: 16px;
+            max-width: 80%;
+            font-size: 15px;
+        }
+
+        .chat-bubble.user {
+            background: #FFEAEB;
+            border-radius: 16px 4px 16px 16px;
+            margin-left: auto;
+            max-width: 80%;
+        }
+
+        /* Pricing & Trust */
+        .pricing-box {
+            background: linear-gradient(135deg, #FFF5F5 0%, #FFFFFF 100%);
+            border: 2px solid var(--primary-color);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            margin: 0 auto 40px auto;
+            text-align: center;
+        }
+
+        .pricing-box h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .price {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 16px;
+        }
+
+        .trust-commitments {
+            display: table;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .trust-item {
+            display: table-cell;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        /* Scenarios */
+        .scenarios-box {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: separate;
+            border-spacing: 20px;
+        }
+
+        .scenario-card {
+            display: table-cell;
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            vertical-align: top;
+        }
+
+        .scenario-card h4 {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: var(--primary-color);
+        }
+
+        .scenario-card p {
+            font-size: 14px;
+            color: #444;
+        }
+
+        /* Footer Section */
+        footer {
+            background-color: #111111;
+            color: #FFFFFF;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        footer h2 {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        footer .subtitle {
+            color: #999999;
+            margin-bottom: 40px;
+        }
+
+        footer .btn-primary {
+            box-shadow: none;
+        }
+
+        footer .footer-note {
+            margin-top: 40px;
+            font-size: 13px;
+            color: #666666;
+            border-top: 1px solid #222222;
+            padding-top: 40px;
+        }
+
+        /* Responsive with Table Layout fixes */
+        @media (max-width: 768px) {
+            h1 { font-size: 32px; }
+            .subtitle { font-size: 16px; }
+            
+            .grid-3x2, .features-grid, .scenarios-box, .trust-commitments {
+                display: block;
+                width: 100%;
+            }
+
+            .grid-row {
+                display: block;
+            }
+
+            .card, .feat-card, .scenario-card, .trust-item {
+                display: block;
+                width: 100% !important;
+                margin-bottom: 16px;
+                border-spacing: 0;
+            }
+            
+            .intro-box { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="logo-badge">KORA 🇨🇳</div>
+            <h1>给在华外国人的 <span>AI 本地向导</span></h1>
+            <p class="subtitle">你的老外朋友来中国，不用再问你“哪儿好吃、怎么打车、支付宝怎么弄”了。</p>
+            <a href="https://t.me/Kora_china_bot" target="_blank" class="btn-primary">在 Telegram 体验 → @Kora_china_bot</a>
+            <p class="hero-note">每天 5 条免费 · 支持中英法俄多语言</p>
+        </div>
+    </header>
+
+    <section class="bg-gray no-border">
+        <div class="container">
+            <h2 class="section-title">KORA 是什么？</h2>
+            <div class="intro-box">
+                <p class="intro-p">KORA 是一个专门服务在华外国人的 AI 本地生活向导，运行在 Telegram 上（机器人 @Kora_china_bot）。</p>
+                <p class="intro-p" style="color: var(--text-muted); font-size: 16px; margin-bottom: 32px;">它的人设是一个在中国、瑞士、英国之间长大的中国女孩——有国际视野，又真正懂中国。它像一个朋友，而不是冷冰冰的搜索平台。</p>
+                <div class="intro-highlight">
+                    <strong>用一句话讲给中国人听：</strong><br>
+                    KORA 就是你送给身边外国朋友、客户、留学生同学的中国向导。他们来中国，不用再靠你当免费翻译和导游。
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2 class="section-title">它到底解决什么问题？</h2>
+            <p class="section-desc">外国人来中国，最大的痛点不是没有好东西，而是中国这套本地系统他们用不了、看不懂：</p>
+            
+            <div class="grid-3x2">
+                <div class="grid-row">
+                    <div class="card">
+                        <div class="card-icon">🗺️</div>
+                        <h3>高德地图</h3>
+                        <p>全中文界面与输入，老外完全无法独立操作使用。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">⭐</div>
+                        <h3>大众点评</h3>
+                        <p>全中文环境，内容繁杂，真实评价老外根本看不懂。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">💳</div>
+                        <h3>移动支付</h3>
+                        <p>不知道怎么绑定国际银行卡、不知道如何扫码或出示码。</p>
+                    </div>
+                </div>
+                <div class="grid-row">
+                    <div class="card">
+                        <div class="card-icon">🌐</div>
+                        <h3>Google Maps</h3>
+                        <p>在中国数据断层严重，基本处于无法使用的状态。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🤖</div>
+                        <h3>ChatGPT</h3>
+                        <p>缺乏真实的本地数据，一查中国的店铺，地址全是在胡编乱造。</p>
+                    </div>
+                    <div class="card" style="visibility: hidden; background: none; border: none;"></div>
+                </div>
+            </div>
+
+            <div class="bridge-box">KORA 就是站在中间的那座“桥” 🌉</div>
+        </div>
+    </section>
+
+    <section class="bg-gray">
+        <div class="container">
+            <h2 class="section-title">KORA 怎么当这座“桥”？</h2>
+            <p class="section-desc">我们通过智能API集成与人性化的筛选，全方位打破信息壁垒：</p>
+            
+            <ul class="list-unstyled">
+                <li><strong>帮他们查</strong> —— 后台调用高德地图 API，把真实的餐厅、酒吧、咖啡馆捞出来（地址、电话、营业时间、评分，全是真的）。</li>
+                <li><strong>帮他们慢</strong> —— 像挑剔的老饕一样，过滤掉网红店、旅游陷阱、连锁快餐，只留真正值得去的。</li>
+                <li><strong>帮他们看懂</strong> —— 用用户的母语（英/法/俄…）解释，并给出高德导航直达链接，点开就能直接打车、导航。</li>
+                <li><strong>帮他们避坑</strong> —— 教他们支付宝怎么绑国际卡、地铁怎么扫码、打车用哪个 App。</li>
+            </ul>
+
+            <div class="boundary-alert">
+                <div class="boundary-title">⚠️ 一个重要的边界（我们很诚实）</div>
+                <p>KORA 是信息层的向导，<strong>不碰用户的支付宝密码、不替他们下单付款</strong>。它负责“查到真店 + 教会怎么用 + 给导航链接”，具体订与付，由用户自己在相应 App 里完成。这样最安全，也最可信。</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2 class="section-title">和普通 AI 有什么不同？</h2>
+            <p class="section-desc">专注中国本土生活，不做虚假承诺，始终保持中立与真诚</p>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>对比维度</th>
+                            <th>普通 AI (ChatGPT)</th>
+                            <th style="color: var(--primary-color);">KORA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>中国本地数据</strong></td>
+                            <td>查不到 → 编假地址</td>
+                            <td class="td-highlight">接入高德 API，真实可靠；查不到就直说"无法确认"</td>
+                        </tr>
+                        <tr>
+                            <td><strong>推荐逻辑</strong></td>
+                            <td>按热度 → 全是网红/旅游陷阱</td>
+                            <td class="td-highlight">像老饕一样精细按品质筛选</td>
+                        </tr>
+                        <tr>
+                            <td><strong>敢说真话</strong></td>
+                            <td>不会，一味迎合</td>
+                            <td class="td-highlight">会直说“这家别去”“超级超预算了”</td>
+                        </tr>
+                        <tr>
+                            <td><strong>导航能力</strong></td>
+                            <td>提供 Google Maps (国内用不了)</td>
+                            <td class="td-highlight">直接附带高德直达链接，点开就走</td>
+                        </tr>
+                        <tr>
+                            <td><strong>商业中立性</strong></td>
+                            <td>—</td>
+                            <td class="td-highlight">不收任何商家排名费，所以敢说真话</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <p class="table-summary">💡 一句话总结：通用 AI 是“什么都懂一点、中国的事全靠猜”；KORA 是“只说中国、只说真的、还带态度”。</p>
+        </div>
+    </section>
+
+    <section class="bg-gray">
+        <div class="container">
+            <h2 class="section-title">KORA 能帮忙做什么？</h2>
+            <p class="section-desc">功能一览：覆盖在华衣食住行的方方面面</p>
+
+            <div class="features-grid">
+                <div class="feat-card">
+                    <div class="feat-icon">🍜</div>
+                    <div class="feat-name">找吃的</div>
+                    <div class="feat-desc">本地人真正会去的餐厅、咖啡、深夜食堂</div>
+                </div>
+                <div class="feat-card">
+                    <div class="feat-icon">🍸</div>
+                    <div class="feat-name">找喝的</div>
+                    <div class="feat-desc">精准按 vibe 氛围匹配酒吧与丰富夜生活</div>
+                </div>
+                <div class="feat-card">
+                    <div class="feat-icon">🚕</div>
+                    <div class="feat-name">智能出行</div>
+                    <div class="feat-desc">打车、地铁、导航，一键直接跳转高德</div>
+                </div>
+            </div>
+            <div class="features-grid" style="margin-top: 16px;">
+                <div class="feat-card">
+                    <div class="feat-icon">💳</div>
+                    <div class="feat-name">生存刚需</div>
+                    <div class="feat-desc">支付绑定、VPN、现金、机场到市区保姆级教程</div>
+                </div>
+                <div class="feat-card">
+                    <div class="feat-icon">🗺️</div>
+                    <div class="feat-name">城市漫步</div>
+                    <div class="feat-desc">武康路、愚园路等极具本土特色的探索路线</div>
+                </div>
+                <div class="feat-card">
+                    <div class="feat-icon">🌍</div>
+                    <div class="feat-name">多语言支持</div>
+                    <div class="feat-desc">中、英、法、俄，你用什么语言发它就怎么回</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2 class="section-title">怎么用？</h2>
+            <p class="section-desc">只需 4 步，即刻上手智享本地生活</p>
+
+            <div class="steps-container">
+                <div class="step-row">
+                    <div class="step-num">1</div>
+                    <div class="step-content">下载 Telegram (电报) 客户端</div>
+                </div>
+                <div class="step-row">
+                    <div class="step-num">2</div>
+                    <div class="step-content">在搜索栏输入并找到机器人 <strong>@Kora_china_bot</strong></div>
+                </div>
+                <div class="step-row">
+                    <div class="step-num">3</div>
+                    <div class="step-content">点击加入并发送 <strong>/start</strong> 激活</div>
+                </div>
+                <div class="step-row">
+                    <div class="step-num">4</div>
+                    <div class="step-content">告诉它三件事：<strong>你在哪 + 想要什么 + 预算/忌口</strong></div>
+                </div>
+
+                <div class="demo-box">
+                    <span class="demo-tag">交互举例 💬</span>
+                    <div class="chat-bubble user">
+                        “我在静安寺，想吃本帮菜，人均150内”
+                    </div>
+                    <div class="chat-bubble">
+                        <strong>KORA 💡：</strong><br>
+                        立刻为你返回 2-3 家精心筛选的本帮菜餐厅（含地址、真实电话、营业时间及直达高德的导航链接）。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-gray">
+        <div class="container">
+            <h2 class="section-title">收费模式</h2>
+            <p class="section-desc">透明纯净的商业机制，用得更放心</p>
+
+            <div class="pricing-box">
+                <h3>Freemium 免费增值模式</h3>
+                <div class="price">每天 5 条免费</div>
+                <p style="color: var(--text-muted); font-size: 15px;">超出免费额度后，可通过 Telegram Stars 便捷充值继续使用。</p>
+            </div>
+
+            <div class="trust-commitments">
+                <div class="trust-item">🔒 不卖用户数据</div>
+                <div class="trust-item">🚫 绝无牛皮癣广告</div>
+                <div class="trust-item">⚖️ 不收商家排名费</div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2 class="section-title">随时随地，引发共鸣的使用场景</h2>
+            <p class="section-desc">无论是商务、学习还是接待，都是你的最佳得力助手</p>
+
+            <div class="scenarios-box">
+                <div class="scenario-card">
+                    <h4>💼 针对外国客户</h4>
+                    <p>你有个法国客户来上海出差，晚上想找家不踩雷的本帮菜——把 @Kora_china_bot 甩给他，他用法语问，KORA 给他带导航的精选店。你省心，他不被坑。</p>
+                </div>
+                <div class="scenario-card">
+                    <h4>🎓 照顾留学生同学</h4>
+                    <p>你的留学生同学刚落地，连支付宝都不会绑——让 KORA 一步步教他，你不用当24小时随叫随到的跨国客服。</p>
+                </div>
+                <div class="scenario-card">
+                    <h4>🏨 民宿/酒店房东</h4>
+                    <p>你开民宿，外国房客总问周边吃喝玩乐——把 KORA 的二维码或 ID 推给他们，指南专业，好评自然来。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <h2>立即在 Telegram 体验 KORA</h2>
+            <p class="subtitle">你的老外朋友，值得一个真正懂中国的向导。</p>
+            <a href="https://t.me/Kora_china_bot" target="_blank" class="btn-primary" style="background-color: #FFFFFF; color: #000000;">开始使用 @Kora_china_bot</a>
+            <p class="footer-note">每天 5 条免费 · 中英法俄多语言 · 数据来自高德实时</p>
+        </div>
+    </footer>
+
+</body>
+</html>
